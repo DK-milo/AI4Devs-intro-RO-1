@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Reverser</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .output-container {
+            margin-top: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+        }
+        #reversedText {
+            font-size: 18px;
+            word-wrap: break-word;
+            min-height: 20px;
+        }
+        .code-tabs {
+            margin-top: 30px;
+        }
+        .tab-buttons {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        .tab-button {
+            background-color: #ddd;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 4px 4px 0 0;
+            margin-right: 5px;
+        }
+        .tab-button.active {
+            background-color: #3498db;
+            color: white;
+        }
+        .tab-content {
+            display: none;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 0 4px 4px 4px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Text Reverser</h1>
+        
+        <div class="input-group">
+            <label for="inputText">Enter Text:</label>
+            <input type="text" id="inputText" placeholder="Type something to reverse...">
+        </div>
+        
+        <button id="clearButton">Clear</button>
+        
+        <div class="output-container">
+            <label>Result:</label>
+            <div id="reversedText"></div>
+        </div>
+        
+        <div class="code-tabs">
+            <div class="tab-buttons">
+                <button class="tab-button active" onclick="openTab('htmlTab')">HTML</button>
+                <button class="tab-button" onclick="openTab('jsTab')">JavaScript</button>
+            </div>
+            
+            <div id="htmlTab" class="tab-content active">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Text Reverser&lt;/title&gt;
+    &lt;link rel="stylesheet" href="styles.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="container"&gt;
+        &lt;h1&gt;Text Reverser&lt;/h1&gt;
+        
+        &lt;div class="input-group"&gt;
+            &lt;label for="inputText"&gt;Enter Text:&lt;/label&gt;
+            &lt;input type="text" id="inputText" placeholder="Type something to reverse..."&gt;
+        &lt;/div&gt;
+        
+        &lt;button id="reverseButton"&gt;Reverse Text&lt;/button&gt;
+        &lt;button id="clearButton"&gt;Clear&lt;/button&gt;
+        
+        &lt;div class="output-container"&gt;
+            &lt;label&gt;Result:&lt;/label&gt;
+            &lt;div id="reversedText"&gt;&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;script src="script.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+            
+            <div id="jsTab" class="tab-content">
+// Wait for the DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Get references to DOM elements
+    const inputText = document.getElementById('inputText');
+    const reverseButton = document.getElementById('reverseButton');
+    const clearButton = document.getElementById('clearButton');
+    const reversedText = document.getElementById('reversedText');
+    
+    // Add event listener for input changes
+inputText.addEventListener('input', function() {
+    const text = inputText.value;
+    
+    // Only reverse if text length is greater than 3
+    if (text.length > 3) {
+        const reversed = text.split('').reverse().join('');
+        reversedText.textContent = reversed;
+    } else {
+        reversedText.textContent = text.length > 0 ? 
+            'Type at least 4 characters...' : '';
+    }
+});
+
+// Function to clear input and output
+function clearAll() {
+    inputText.value = '';
+    reversedText.textContent = '';
+    inputText.focus();
+}
+
+// Add event listener for the clear button
+clearButton.addEventListener('click', clearAll);
+    
+    // Function to reverse the input text
+    function reverseInputText() {
+        const text = inputText.value;
+        if (text.trim() === '') {
+            reversedText.textContent = 'Please enter some text to reverse.';
+            return;
+        }
+        
+        // Reverse the text using Array methods
+        const reversed = text.split('').reverse().join('');
+        
+        // Display the reversed text
+        reversedText.textContent = reversed;
+    }
+    
+    // Function to clear input and output
+    function clearAll() {
+        inputText.value = '';
+        reversedText.textContent = '';
+        inputText.focus();
+    }
+});
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Wait for the DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get references to DOM elements
+            const inputText = document.getElementById('inputText');
+            const clearButton = document.getElementById('clearButton');
+            const reversedText = document.getElementById('reversedText');
+            
+            // Add event listener for input changes
+            inputText.addEventListener('input', function() {
+                const text = inputText.value;
+                
+                // Only reverse if text length is greater than 3
+                if (text.length > 3) {
+                    const reversed = text.split('').reverse().join('');
+                    reversedText.textContent = reversed;
+                } else {
+                    reversedText.textContent = text.length > 0 ? 
+                        'Type at least 4 characters...' : '';
+                }
+            });
+            
+            // Function to clear input and output
+            function clearAll() {
+                inputText.value = '';
+                reversedText.textContent = '';
+                inputText.focus();
+            }
+            
+            // Add event listener for the clear button
+            clearButton.addEventListener('click', clearAll);
+        });
+
+        // Tab functionality for code display
+        function openTab(tabName) {
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+            
+            const tabButtons = document.getElementsByClassName('tab-button');
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove('active');
+            }
+            
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
